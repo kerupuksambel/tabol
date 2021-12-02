@@ -21,6 +21,9 @@ class MyApp extends StatelessWidget {
 				primarySwatch: Colors.red
 			),
 			home: MyHomePage(title: 'TABOL'),
+      routes: <String, WidgetBuilder>{
+        
+      }
 		);
 	}
 }
@@ -49,13 +52,15 @@ class Tenant {
   final String nama;
   final String deskripsi;
   final String photoUrl;
+  final double rating;
 
   Tenant({
     required this.userId,
     required this.id,
     required this.nama,
     required this.deskripsi,
-    required this.photoUrl
+    required this.photoUrl,
+    required this.rating
   });
 
   factory Tenant.fromJson(Map<String, dynamic> json) {
@@ -64,7 +69,8 @@ class Tenant {
       id: json['id'],
       nama: json['nama'],
       deskripsi: json['deskripsi'],
-      photoUrl: json['photo_url']
+      photoUrl: json['photo_url'],
+      rating: json['rating'],
     );
   }
 }
@@ -77,11 +83,8 @@ Future<List<Tenant>> fetchTenant() async{
       result.add(Tenant.fromJson(item));
     }
     return result;
-    // return Tenant.fromJson(jsonDecode(response.body));
   } else {
-    // If the server did not return a 200 OK response,
-    // then throw an exception.
-    throw Exception('Failed to load album');
+    throw Exception('Failed to load rating');
   }
 } 
 
@@ -104,36 +107,12 @@ class _MyHomePageState extends State<MyHomePage> {
 
 	@override
 	Widget build(BuildContext context) {
-		// This method is rerun every time setState is called, for instance as done
-		// by the _incrementCounter method above.
-		//
-		// The Flutter framework has been optimized to make rerunning build methods
-		// fast, so that you can just rebuild anything that needs updating rather
-		// than having to individually change instances of widgets.
 		return Scaffold(
 			appBar: AppBar(
-				// Here we take the value from the MyHomePage object that was created by
-				// the App.build method, and use it to set our appbar title.
 				title: Text(widget.title),
 			),
 			body: Center(
-				// Center is a layout widget. It takes a single child and positions it
-				// in the middle of the parent.
 				child: Column(
-					// Column is also a layout widget. It takes a list of children and
-					// arranges them vertically. By default, it sizes itself to fit its
-					// children horizontally, and tries to be as tall as its parent.
-					//
-					// Invoke "debug painting" (press "p" in the console, choose the
-					// "Toggle Debug Paint" action from the Flutter Inspector in Android
-					// Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-					// to see the wireframe for each widget.
-					//
-					// Column has various properties to control how it sizes itself and
-					// how it positions its children. Here we use mainAxisAlignment to
-					// center the children vertically; the main axis here is the vertical
-					// axis because Columns are vertical (the cross axis would be
-					// horizontal).
 					mainAxisAlignment: MainAxisAlignment.start,
 					children: <Widget>[
 						// Text(
@@ -161,17 +140,45 @@ class _MyHomePageState extends State<MyHomePage> {
                     padding: const EdgeInsets.all(8),
       							shrinkWrap: true,
                     itemBuilder: (BuildContext context, int idx){
-                      return Container(
-                        height: 200,
-                        color: Colors.white,
-                        child: Center(
-                          child: Column(
-                            children: [
-                              Image.network('${snapshot.data![idx].photoUrl}'),
-                              Text('${snapshot.data![idx].nama}'),
-                            ]
+                      return InkWell(
+                        child: Container(
+                          height: 180,
+                          width: MediaQuery.of(context).size.width * 0.2,
+                          color: Colors.white,
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Row(
+                              children: [
+                                Column(
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.fromLTRB(12, 0, 12, 0),
+                                      child: Image.network('${snapshot.data![idx].photoUrl}'),
+                                    ),
+                                    // Image.network('${snapshot.data![idx].photoUrl}'),
+                                  ],
+                                ),
+                                Flexible(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Text('${snapshot.data![idx].nama}', textAlign: TextAlign.left, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24)),
+                                      Padding(
+                                        padding: EdgeInsets.fromLTRB(0, 12, 0, 12),
+                                        child: Text('${snapshot.data![idx].deskripsi}', textAlign: TextAlign.left)
+                                      ),
+                                      Text('${snapshot.data![idx].rating}', textAlign: TextAlign.center,)
+                                    ]
+                                  )
+                                )
+                              ]
+                            )
                           )
-                        )
+                        ),
+                        onTap: (){
+                          print('${snapshot.data![idx].id}');
+                        },
                       ); 
                     },
                     separatorBuilder: (BuildContext context, int index) => const Divider(), 
@@ -183,7 +190,16 @@ class _MyHomePageState extends State<MyHomePage> {
 
                 return const CircularProgressIndicator();
               }
-            )
+            ),
+            // Container(
+            //   child: Row(
+            //     children: <Widget>[
+            //       Flexible(
+            //         child: new Text("A looooooooooooooooooong text", style: TextStyle(fontSize: 48),)
+            //       )
+            //     ],
+            //   )
+            // ),
 						// Text(
 						// 	'$_counter',
 						// 	style: Theme.of(context).textTheme.headline4,
@@ -191,11 +207,11 @@ class _MyHomePageState extends State<MyHomePage> {
 					],
 				),
 			),
-			floatingActionButton: FloatingActionButton(
-				onPressed: _incrementCounter,
-				tooltip: 'Increment',
-				child: Icon(Icons.add),
-			), // This trailing comma makes auto-formatting nicer for build methods.
+			// floatingActionButton: FloatingActionButton(
+			// 	onPressed: _incrementCounter,
+			// 	tooltip: 'Increment',
+			// 	child: Icon(Icons.add),
+			// ), // This trailing comma makes auto-formatting nicer for build methods.
 		);
 	}
 }
