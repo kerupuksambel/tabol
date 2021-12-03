@@ -2,9 +2,10 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+// import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
-
+import 'package:tabol/routes.dart' as routes;
+import 'package:tabol/model/tenant.dart';
 
 void main() {
 	runApp(MyApp());
@@ -20,59 +21,19 @@ class MyApp extends StatelessWidget {
 			theme: ThemeData(
 				primarySwatch: Colors.red
 			),
-			home: MyHomePage(title: 'TABOL'),
-      routes: <String, WidgetBuilder>{
-        
-      }
+			home: CustomerHomePage(title: 'TABOL'),
+      onGenerateRoute: routes.generateRoute,
 		);
 	}
 }
 
-class MyHomePage extends StatefulWidget {
-	MyHomePage({Key? key, required this.title}) : super(key: key);
-
-	// This widget is the home page of your application. It is stateful, meaning
-	// that it has a State object (defined below) that contains fields that affect
-	// how it looks.
-
-	// This class is the configuration for the state. It holds the values (in this
-	// case the title) provided by the parent (in this case the App widget) and
-	// used by the build method of the State. Fields in a Widget subclass are
-	// always marked "final".
+class CustomerHomePage extends StatefulWidget {
+	CustomerHomePage({Key? key, required this.title}) : super(key: key);
 
 	final String title;
 
 	@override
-	_MyHomePageState createState() => _MyHomePageState();
-}
-
-class Tenant {
-  final int userId;
-  final int id;
-  final String nama;
-  final String deskripsi;
-  final String photoUrl;
-  final double rating;
-
-  Tenant({
-    required this.userId,
-    required this.id,
-    required this.nama,
-    required this.deskripsi,
-    required this.photoUrl,
-    required this.rating
-  });
-
-  factory Tenant.fromJson(Map<String, dynamic> json) {
-    return Tenant(
-      userId: json['user_id'],
-      id: json['id'],
-      nama: json['nama'],
-      deskripsi: json['deskripsi'],
-      photoUrl: json['photo_url'],
-      rating: json['rating'],
-    );
-  }
+	_CustomerHomePageState createState() => _CustomerHomePageState();
 }
 
 Future<List<Tenant>> fetchTenant() async{
@@ -84,14 +45,13 @@ Future<List<Tenant>> fetchTenant() async{
     }
     return result;
   } else {
-    throw Exception('Failed to load rating');
+    throw Exception('Failed to load tenants');
   }
 } 
 
-class _MyHomePageState extends State<MyHomePage> {
+class _CustomerHomePageState extends State<CustomerHomePage> {
 	int _counter = 0;
 
-	List<String> entries = <String>["Test_1", "Test_2", "Test_3"];
 	late Future<List<Tenant>> futureTenants;
 
   void initState(){
@@ -115,23 +75,6 @@ class _MyHomePageState extends State<MyHomePage> {
 				child: Column(
 					mainAxisAlignment: MainAxisAlignment.start,
 					children: <Widget>[
-						// Text(
-						// 	'You have pushed the button this many times:',
-						// ),
-						// ListView.separated(
-						// 	padding: const EdgeInsets.all(8),
-						// 	shrinkWrap: true,
-						// 	itemCount: entries.length,
-						// 	itemBuilder: (BuildContext context, int idx){
-						// 		return Container(
-						// 			height: 50,
-						// 			color: Colors.amber[200],
-						// 			child: Center(child: Text('Entry ${entries[idx]}')),
-									
-						// 		);
-						// 	},
-						// 	separatorBuilder: (BuildContext context, int index) => const Divider(),
-						// ),
             FutureBuilder<List<Tenant>>(
               future: futureTenants,
               builder: (context, snapshot){
@@ -143,7 +86,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       return InkWell(
                         child: Container(
                           height: 180,
-                          width: MediaQuery.of(context).size.width * 0.2,
+                          padding: EdgeInsets.fromLTRB(0, 12, 0, 12),
                           color: Colors.white,
                           child: Align(
                             alignment: Alignment.centerLeft,
@@ -155,7 +98,6 @@ class _MyHomePageState extends State<MyHomePage> {
                                       padding: EdgeInsets.fromLTRB(12, 0, 12, 0),
                                       child: Image.network('${snapshot.data![idx].photoUrl}'),
                                     ),
-                                    // Image.network('${snapshot.data![idx].photoUrl}'),
                                   ],
                                 ),
                                 Flexible(
@@ -177,7 +119,8 @@ class _MyHomePageState extends State<MyHomePage> {
                           )
                         ),
                         onTap: (){
-                          print('${snapshot.data![idx].id}');
+                          // print('${snapshot.data![idx].id}');
+                          Navigator.pushNamed(context, '/tenant/detail/', arguments: snapshot.data![idx].id);
                         },
                       ); 
                     },
@@ -191,19 +134,6 @@ class _MyHomePageState extends State<MyHomePage> {
                 return const CircularProgressIndicator();
               }
             ),
-            // Container(
-            //   child: Row(
-            //     children: <Widget>[
-            //       Flexible(
-            //         child: new Text("A looooooooooooooooooong text", style: TextStyle(fontSize: 48),)
-            //       )
-            //     ],
-            //   )
-            // ),
-						// Text(
-						// 	'$_counter',
-						// 	style: Theme.of(context).textTheme.headline4,
-						// ),
 					],
 				),
 			),
