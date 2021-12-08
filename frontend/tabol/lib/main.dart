@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
 		return MaterialApp(
 			title: 'Tabol',
 			theme: ThemeData(
-				primarySwatch: Colors.red
+				primarySwatch: Colors.blue
 			),
 			home: CustomerHomePage(title: 'TABOL'),
       onGenerateRoute: routes.generateRoute,

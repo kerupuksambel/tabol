@@ -38,7 +38,7 @@ class TenantDetailState extends State<TenantDetail>{
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-				title: Text(widget.id.toString()),
+				title: Text("Detail Tenant"),
 			),
       body: Center(
         child: Column(
@@ -63,7 +63,6 @@ class TenantDetailState extends State<TenantDetail>{
                           padding: EdgeInsets.fromLTRB(8, 0, 8, 8), 
                           child: Text('${snapshot.data!.deskripsi}', textAlign: TextAlign.left,)
                         ),
-                        // Image.network('https://via.placeholder.com/'+ MediaQuery.of(context).size.width.toString() +'x200.png'),
                       ],
                     )
                   );
