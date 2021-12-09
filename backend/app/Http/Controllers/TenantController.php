@@ -28,7 +28,7 @@ class TenantController extends Controller
         ]);
     }
 
-    public function detail($tenant_id)
+    public function detail($id_tenant)
     {
         $data = [
             [
@@ -49,11 +49,6 @@ class TenantController extends Controller
             ],
         ];
 
-        return response()->json($data[$tenant_id - 1]);
-    }
-
-    public function service($tenant_id)
-    {
-        
+        return response()->json($data[$id_tenant - 1]);
     }
 }

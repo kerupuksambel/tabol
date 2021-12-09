@@ -76,7 +76,7 @@ class TenantDetailState extends State<TenantDetail>{
       ),
       floatingActionButton: FloatingActionButton(
 				onPressed: (){
-          Navigator.pushNamed(context, '/tenant/service', arguments: widget.id);
+          Navigator.pushNamed(context, '/tenant/service/', arguments: widget.id);
         },
 				tooltip: 'Pesan',
 				child: Icon(Icons.shopping_cart),

@@ -36,7 +36,7 @@ class CustomerHomePage extends StatefulWidget {
 	_CustomerHomePageState createState() => _CustomerHomePageState();
 }
 
-Future<List<Tenant>> fetchTenant() async{
+Future<List<Tenant>> fetchTenants() async{
   final response = await http.get(Uri.parse('http://localhost:8000/api/tenant'));
   List<Tenant> result = [];
   if (response.statusCode == 200) {
@@ -50,20 +50,13 @@ Future<List<Tenant>> fetchTenant() async{
 } 
 
 class _CustomerHomePageState extends State<CustomerHomePage> {
-	int _counter = 0;
 
 	late Future<List<Tenant>> futureTenants;
 
   void initState(){
     super.initState();
-    futureTenants = fetchTenant();
+    futureTenants = fetchTenants();
   }
-
-	void _incrementCounter() {
-		setState(() {
-			_counter++;
-		});
-	}
 
 	@override
 	Widget build(BuildContext context) {
