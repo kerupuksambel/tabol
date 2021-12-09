@@ -68,7 +68,7 @@ class TenantServiceState extends State<TenantService>{
                         trailing: ElevatedButton(
                           child: Text('${snapshot.data![idx].hargaFormat}'),
                           onPressed: (){
-                            Navigator.pushNamed(context, '/tenant/order/', arguments: snapshot.data![idx].id);
+                            Navigator.pushNamed(context, '/tenant/order/', arguments: snapshot.data![idx]);
                           },
                         ),
                         title: Text('${snapshot.data![idx].nama}')

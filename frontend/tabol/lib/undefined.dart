@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class UndefinedView extends StatelessWidget {
-  final String name;
-  const UndefinedView({Key? key, required this.name}) : super(key: key);  
+  final String err;
+  const UndefinedView({Key? key, required this.err}) : super(key: key);  
   
   @override
   Widget build(BuildContext context) {
@@ -12,7 +12,7 @@ class UndefinedView extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Padding(padding: EdgeInsets.fromLTRB(0, 24, 0, 24), child: Text('Halaman tidak ditemukan')),
+            Padding(padding: EdgeInsets.fromLTRB(0, 24, 0, 24), child: Text(this.err)),
             TextButton(
               onPressed: (){
                 Navigator.pop(context);

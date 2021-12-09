@@ -18,7 +18,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
         return MaterialPageRoute(builder: (context) => TenantDetail(id: args));
       }else{
         print(args);
-        return MaterialPageRoute(builder: (context) => UndefinedView(name: 'Illegal Parameter'));
+        return MaterialPageRoute(builder: (context) => UndefinedView(err: 'Parameter invalid.'));
       }
     case '/tenant/service/':
       final args = settings.arguments;
@@ -26,7 +26,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
         return MaterialPageRoute(builder: (context) => TenantService(id: args));
       }else{
         print(args);
-        return MaterialPageRoute(builder: (context) => UndefinedView(name: 'TABOL'));
+        return MaterialPageRoute(builder: (context) => UndefinedView(err: 'Parameter invalid.'));
       }
     case '/tenant/order/':
       final args = settings.arguments;
@@ -35,9 +35,18 @@ Route<dynamic> generateRoute(RouteSettings settings) {
         return MaterialPageRoute(builder: (context) => TenantOrder(service: args));
       }else{
         print(args);
-        return MaterialPageRoute(builder: (context) => UndefinedView(name: 'TABOL'));
+        return MaterialPageRoute(builder: (context) => UndefinedView(err: 'Parameter invalid.'));
+      }
+    case '/order/list/':
+      final args = settings.arguments;
+      
+      if(args is Service){
+        return MaterialPageRoute(builder: (context) => TenantOrder(service: args));
+      }else{
+        print(args);
+        return MaterialPageRoute(builder: (context) => UndefinedView(err: 'Parameter invalid.'));
       }
     default:
-      return MaterialPageRoute(builder: (context) => UndefinedView(name: 'TABOL'));
+      return MaterialPageRoute(builder: (context) => UndefinedView(err: 'Halaman tidak ditemukan.'));
   }
 }

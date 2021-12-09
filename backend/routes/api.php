@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/tenant', 'TenantController@index');
 Route::get('/tenant/detail/{id_tenant}', 'TenantController@detail');
 Route::get('/tenant/service/{id_tenant}', 'ServiceController@detail');
-Route::post('/tenant/order/{service_id}', 'OrderController@add');
+Route::post('/tenant/submit/', 'OrderController@add');
 Route::post('/tenant/order/{order_id}/rate', 'OrderController@rate');
 
 // Tenant menu
