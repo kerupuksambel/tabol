@@ -35,7 +35,7 @@ class TenantOrderState extends State<TenantOrder>{
   void initState(){
     super.initState();
     submitOrder(widget.service.tenantId, widget.service.id).then((id) {
-      Navigator.pushReplacementNamed(context, "/tenant/detail/", arguments: 1);
+      Navigator.pushReplacementNamed(context, "/order/list/");
     });
   }
 

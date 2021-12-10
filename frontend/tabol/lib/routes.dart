@@ -5,6 +5,7 @@ import 'package:tabol/main.dart';
 import 'package:tabol/customer/tenant_service.dart';
 import 'package:tabol/customer/tenant_detail.dart';
 import 'package:tabol/customer/tenant_order.dart';
+import 'package:tabol/customer/order_list.dart';
 import 'package:tabol/model/service.dart';
 import 'package:tabol/undefined.dart';
 
@@ -38,14 +39,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
         return MaterialPageRoute(builder: (context) => UndefinedView(err: 'Parameter invalid.'));
       }
     case '/order/list/':
-      final args = settings.arguments;
-      
-      if(args is Service){
-        return MaterialPageRoute(builder: (context) => TenantOrder(service: args));
-      }else{
-        print(args);
-        return MaterialPageRoute(builder: (context) => UndefinedView(err: 'Parameter invalid.'));
-      }
+        return MaterialPageRoute(builder: (context) => OrderList());
     default:
       return MaterialPageRoute(builder: (context) => UndefinedView(err: 'Halaman tidak ditemukan.'));
   }
