@@ -66,6 +66,8 @@ class TenantDetailState extends State<TenantDetail>{
                       ],
                     )
                   );
+                }else if(snapshot.hasError){
+                  return Text('${snapshot.error}');
                 }
 
                 return const CircularProgressIndicator();

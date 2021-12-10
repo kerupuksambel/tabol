@@ -23,7 +23,7 @@ class Service {
     );
 
     return Service(
-      tenantId: json['id_tenant'],
+      tenantId: json['tenant_id'],
       id: json['id'],
       nama: json['nama'],
       harga: json['harga'],

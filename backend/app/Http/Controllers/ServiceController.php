@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Service;
 use Illuminate\Http\Request;
 
 class ServiceController extends Controller
@@ -21,6 +22,8 @@ class ServiceController extends Controller
                 "harga" => 5000
             ],
         ];
+
+        $data = Service::where('tenant_id', $id_tenant)->get();
 
         return response()->json($data);
     }
