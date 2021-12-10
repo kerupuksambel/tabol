@@ -32,7 +32,7 @@ class OrderController extends Controller
 
     public function rate($order_id)
     {
-
+        return response()->json(["success" => 1]);
     }
 
 
@@ -54,6 +54,6 @@ class OrderController extends Controller
 
     public function finish($order_id)
     {
-
+        return response()->json(["success" => 1]);
     }
 }

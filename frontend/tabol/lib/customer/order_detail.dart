@@ -93,7 +93,7 @@ class OrderDetailState extends State<OrderDetail>{
       ),
       floatingActionButton: FloatingActionButton(
 				onPressed: (){
-          Navigator.pushNamed(context, '/tenant/service/finish/', arguments: widget.order);
+          Navigator.pushNamed(context, '/order/finish/', arguments: widget.order);
         },
 				tooltip: 'Selesaikan',
 				child: Icon(Icons.check),
