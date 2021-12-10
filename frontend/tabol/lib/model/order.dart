@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 class Order {
   final int id;
   final String tenantName;
@@ -7,6 +9,10 @@ class Order {
   final double long;
   final String createdAt;
   final String updatedAt;
+  String? serviceName;
+  int? harga;
+  String? hargaFormat;
+  int? rating;
 
   Order({
     required this.id,
@@ -17,11 +23,22 @@ class Order {
     required this.long,
     required this.createdAt,
     required this.updatedAt,
-  });
+  }
+    // {
+    //   this.serviceName = "",
+    //   this.harga = 0,
+    //   this.rating = 0
+    // }
+  );
 
   factory Order.fromJson(Map<String, dynamic> json) {
-
-    return Order(
+    NumberFormat formatCurrency = NumberFormat.currency(
+      locale: 'id',
+      symbol: 'Rp. ',
+      decimalDigits: 0
+    );
+    
+    Order order = Order(
       tenantName: json['tenant_nama'],
       id: json['id'],
       serviceId: json['service_id'],
@@ -31,5 +48,20 @@ class Order {
       createdAt: json['created_at'],
       updatedAt: json['updated_at'],
     );
+
+    if(json.containsKey("service_nama")){
+      order.serviceName = json['service_nama'];
+    }
+
+    if(json.containsKey('harga')){
+      order.harga = json['harga'];
+      order.hargaFormat = formatCurrency.format(json['harga']);
+    }
+
+    if(json.containsKey('rating')){
+      order.rating = json['rating'];
+    }
+
+    return order;
   }
 }

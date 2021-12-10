@@ -6,6 +6,8 @@ import 'package:tabol/customer/tenant_service.dart';
 import 'package:tabol/customer/tenant_detail.dart';
 import 'package:tabol/customer/tenant_order.dart';
 import 'package:tabol/customer/order_list.dart';
+import 'package:tabol/customer/order_detail.dart';
+import 'package:tabol/model/order.dart';
 import 'package:tabol/model/service.dart';
 import 'package:tabol/undefined.dart';
 
@@ -40,6 +42,14 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       }
     case '/order/list/':
         return MaterialPageRoute(builder: (context) => OrderList());
+    case '/order/detail/':
+      final args = settings.arguments;
+      if(args is Order){
+        return MaterialPageRoute(builder: (context) => OrderDetail(order: args));
+      }else{
+        print(args);
+        return MaterialPageRoute(builder: (context) => UndefinedView(err: 'Parameter invalid.'));
+      }
     default:
       return MaterialPageRoute(builder: (context) => UndefinedView(err: 'Halaman tidak ditemukan.'));
   }

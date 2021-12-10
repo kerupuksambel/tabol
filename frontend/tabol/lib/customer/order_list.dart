@@ -54,7 +54,7 @@ class OrderListState extends State<OrderList>{
                         trailing: ElevatedButton(
                           child: Text('Lihat'),
                           onPressed: (){
-                            Navigator.pushNamed(context, '/tenant/order/detail/', arguments: snapshot.data![idx]);
+                            Navigator.pushNamed(context, '/order/detail/', arguments: snapshot.data![idx]);
                           },
                         ),
                         title: Text('${snapshot.data![idx].tenantName}'),
