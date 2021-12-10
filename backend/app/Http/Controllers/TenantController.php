@@ -12,8 +12,12 @@ class TenantController extends Controller
     {
         $data = Tenant::all();
         foreach ($data as $d) {
-            if(count($d->review()->get()) > 0){
-                $d->rating = array_sum(array_column($d->review, "rating")) / count($d->review);
+            $legits = $d->review()
+            ->whereNotNull('rating')
+            ->get()
+            ->toArray();
+            if(count($legits) > 0){
+                $d->rating = array_sum(array_column($legits, "rating")) / count($legits);
             }else{
                 $d->rating = 0.0;
             }
@@ -61,8 +65,13 @@ class TenantController extends Controller
             ],
         ];
         $data = Tenant::find($id_tenant);
-        if(count($data->review()->get()) > 0){
-            $data->rating = array_sum(array_column($data->review, "rating")) / count($data->review);
+        $legits = $data->review()
+        ->whereNotNull('rating')
+        ->get()
+        ->toArray();
+
+        if(count($legits) > 0){
+            $data->rating = array_sum(array_column($legits, "rating")) / count($legits);
         }else{
             $data->rating = 0.0;
         }

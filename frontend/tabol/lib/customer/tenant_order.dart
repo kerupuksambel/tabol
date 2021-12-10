@@ -4,8 +4,18 @@ import 'package:flutter/material.dart';
 import 'package:tabol/model/service.dart';
 import 'package:http/http.dart' as http;
 
-Future<int> submitOrder(int tenantId, int id) async{
-  final response = await http.post(Uri.parse('http://localhost:8000/api/tenant/submit/'));
+Future<int> submitOrder(Service service) async{
+  final response = await http.post(Uri.parse('http://localhost:8000/api/tenant/submit/'), 
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: jsonEncode({
+      "service_id" : service.id,
+      "tenant_id" : service.tenantId,
+      "lat" : -8.073240,
+      "long" : 111.907340
+    })
+  );
   print(response.statusCode);
   
   if (response.statusCode == 200) {
@@ -14,7 +24,7 @@ Future<int> submitOrder(int tenantId, int id) async{
     return decoded['success'];
     
   } else {
-    print("error");
+    print(response.body);
     throw Exception('Failed to load tenant');
   }
 } 
@@ -34,7 +44,7 @@ class TenantOrderState extends State<TenantOrder>{
 
   void initState(){
     super.initState();
-    submitOrder(widget.service.tenantId, widget.service.id).then((id) {
+    submitOrder(widget.service).then((id) {
       Navigator.pushReplacementNamed(context, "/order/list/");
     });
   }

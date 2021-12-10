@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:tabol/model/order.dart';
 import 'package:http/http.dart' as http;
@@ -27,6 +28,9 @@ Future<int> rateOrder(Order order, String rate) async{
   order.rating = int.parse(rate);
   final response = await http.post(
     Uri.parse('http://localhost:8000/api/order/' + order.id.toString() +'/rate/'), 
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
     body: jsonEncode({
       "id" : order.id,
       "rating" : order.rating
@@ -87,6 +91,9 @@ class OrderFinishState extends State<OrderFinish>{
             Text("Rate"),
             TextField(
               controller: txtController,
+              keyboardType: TextInputType.number,
+              inputFormatters: [FilteringTextInputFormatter.digitsOnly]
+              // ],
             ),
             ElevatedButton(
               onPressed: ((){
