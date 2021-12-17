@@ -9,6 +9,8 @@ class Order {
   final double long;
   final String createdAt;
   final String updatedAt;
+  final int userId;
+  
   String? serviceName;
   int? harga;
   String? hargaFormat;
@@ -23,6 +25,7 @@ class Order {
     required this.long,
     required this.createdAt,
     required this.updatedAt,
+    required this.userId,
   }
     // {
     //   this.serviceName = "",
@@ -47,6 +50,7 @@ class Order {
       long: json['long'],
       createdAt: json['created_at'],
       updatedAt: json['updated_at'],
+      userId: json['user_id']
     );
 
     if(json.containsKey("service_nama")){

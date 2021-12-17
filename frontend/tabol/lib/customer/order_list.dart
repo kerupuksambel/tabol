@@ -86,6 +86,24 @@ class OrderListState extends State<OrderList>{
           ]
         )
       ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.shopping_bag),
+            label: 'Order',
+          ),
+        ],
+        selectedItemColor: Colors.blue,
+        currentIndex: 1,
+        onTap: ((idx){
+          List<String> links = ['/tenant/', '/order/list/'];
+          Navigator.pushNamed(context, links[idx]);
+        }),
+      ),
     );
   }
 }

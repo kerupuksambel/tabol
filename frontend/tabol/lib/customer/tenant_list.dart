@@ -31,6 +31,7 @@ Future<List<Tenant>> fetchTenants() async{
 class _CustomerHomePageState extends State<CustomerHomePage> {
 
 	late Future<List<Tenant>> futureTenants;
+  int menuSelected = 0;
 
   void initState(){
     super.initState();
@@ -111,6 +112,24 @@ class _CustomerHomePageState extends State<CustomerHomePage> {
 					],
 				),
 			),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.shopping_bag),
+            label: 'Order',
+          ),
+        ],
+        selectedItemColor: Colors.blue,
+        onTap: ((idx){
+          List<String> links = ['/tenant/', '/order/list/'];
+          Navigator.pushNamed(context, links[idx]);
+        }),
+      ),
+      
 			// floatingActionButton: FloatingActionButton(
 			// 	onPressed: _incrementCounter,
 			// 	tooltip: 'Increment',

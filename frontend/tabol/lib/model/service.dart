@@ -6,7 +6,6 @@ class Service {
   final String nama;
   final int harga;
   final String hargaFormat;
-  final int userId;
 
   Service({
     required this.tenantId,
@@ -14,7 +13,6 @@ class Service {
     required this.nama,
     required this.harga,
     required this.hargaFormat,
-    required this.userId,
   });
 
   factory Service.fromJson(Map<String, dynamic> json) {
@@ -30,7 +28,6 @@ class Service {
       nama: json['nama'],
       harga: json['harga'],
       hargaFormat: formatCurrency.format(json["harga"]),
-      userId: json['user_id']
     );
   }
 }

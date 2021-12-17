@@ -77,6 +77,8 @@ class TenantServiceState extends State<TenantService>{
                     separatorBuilder: (BuildContext context, int index) => const Divider(), 
                     itemCount: snapshot.data!.length
                   );
+                }else{
+                  print(snapshot.error);
                 }
 
                 return const CircularProgressIndicator();
