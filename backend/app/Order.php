@@ -16,6 +16,7 @@ class Order extends Model
         'rating',
         'created_at',
         'updated_at',
+        'user_id'
     ];
 
     protected $dateFormat = "Y-m-d H:i:s";

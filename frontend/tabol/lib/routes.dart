@@ -1,7 +1,7 @@
 import 'dart:js';
 
 import 'package:flutter/material.dart';
-import 'package:tabol/main.dart';
+import 'package:tabol/customer/tenant_list.dart';
 import 'package:tabol/customer/tenant_service.dart';
 import 'package:tabol/customer/tenant_detail.dart';
 import 'package:tabol/customer/tenant_order.dart';
@@ -14,7 +14,7 @@ import 'package:tabol/undefined.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {
   switch (settings.name){
-    case '/':
+    case '/tenant/':
       return MaterialPageRoute(builder: (context) => CustomerHomePage(title: 'TABOL'));
     case '/tenant/detail/':
       final args = settings.arguments;

@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Route;
 
 
 // Customer menu
+Route::post('/login', 'UserController@login');
 Route::get('/tenant', 'TenantController@index');
 Route::get('/tenant/detail/{id_tenant}', 'TenantController@detail');
 Route::get('/tenant/service/{id_tenant}', 'ServiceController@detail');

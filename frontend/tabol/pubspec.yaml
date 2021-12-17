@@ -32,6 +32,7 @@ dependencies:
   fluttertoast: ^8.0.8
   intl: ^0.17.0
   flutter_map: ^0.14.0
+  shared_preferences: ^2.0.11
 
 dev_dependencies:
   flutter_test:

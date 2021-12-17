@@ -46,34 +46,37 @@ class OrderListState extends State<OrderList>{
               future: futureOrders,
               builder: (context, snapshot){
                 if(snapshot.hasData){
-                  return  ListView.separated(
-                    shrinkWrap: true,
-                    padding: const EdgeInsets.all(8),
-                    itemBuilder: (BuildContext context, int idx){
-                      return ListTile(
-                        trailing: ElevatedButton(
-                          child: Text('Lihat'),
-                          onPressed: (){
-                            Navigator.pushNamed(context, '/order/detail/', arguments: snapshot.data![idx]);
-                          },
-                        ),
-                        title: Text('${snapshot.data![idx].tenantName}'),
-                        subtitle: Text('${snapshot.data![idx].createdAt}'),
-                        leading: Icon(((){
-                          switch (snapshot.data![idx].status) {
-                            case "dipesan":
-                              return Icons.access_time_filled;
-                            case "diterima":
-                              return Icons.airport_shuttle;
-                            default:
-                              return Icons.check;
-                          }
-                        })()) 
-                          
-                      );
-                    }, 
-                    separatorBuilder: (BuildContext context, int index) => const Divider(), 
-                    itemCount: snapshot.data!.length
+                  return Expanded(child: 
+                    ListView.separated(
+                      shrinkWrap: true,
+                      scrollDirection: Axis.vertical,
+                      padding: const EdgeInsets.all(8),
+                      itemBuilder: (BuildContext context, int idx){
+                        return ListTile(
+                          trailing: ElevatedButton(
+                            child: Text('Lihat'),
+                            onPressed: (){
+                              Navigator.pushNamed(context, '/order/detail/', arguments: snapshot.data![idx]);
+                            },
+                          ),
+                          title: Text('${snapshot.data![idx].tenantName}'),
+                          subtitle: Text('${snapshot.data![idx].createdAt}'),
+                          leading: Icon(((){
+                            switch (snapshot.data![idx].status) {
+                              case "dipesan":
+                                return Icons.access_time_filled;
+                              case "diterima":
+                                return Icons.airport_shuttle;
+                              default:
+                                return Icons.check;
+                            }
+                          })()) 
+                            
+                        );
+                      }, 
+                      separatorBuilder: (BuildContext context, int index) => const Divider(), 
+                      itemCount: snapshot.data!.length
+                    )
                   );
                 }
 

@@ -17,7 +17,7 @@ class TenantController extends Controller
             ->get()
             ->toArray();
             if(count($legits) > 0){
-                $d->rating = array_sum(array_column($legits, "rating")) / count($legits);
+                $d->rating = round(array_sum(array_column($legits, "rating")) / count($legits), 2);
             }else{
                 $d->rating = 0.0;
             }
@@ -71,7 +71,7 @@ class TenantController extends Controller
         ->toArray();
 
         if(count($legits) > 0){
-            $data->rating = array_sum(array_column($legits, "rating")) / count($legits);
+            $data->rating = round(array_sum(array_column($legits, "rating")) / count($legits), 2);
         }else{
             $data->rating = 0.0;
         }

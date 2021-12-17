@@ -36,10 +36,10 @@ class OrderController extends Controller
 
     public function add(Request $request)
     {
-        // dd($request);
         Order::create([
             "service_id" => $request->service_id,
             "tenant_id" => $request->tenant_id,
+            "user_id" => $request->user_id,
             "status" => "dipesan",
             "lat" => $request->lat,
             "long" => $request->long

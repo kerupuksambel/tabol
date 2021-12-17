@@ -81,19 +81,26 @@ class OrderFinishState extends State<OrderFinish>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-				title: Text("Service"),
-			),
-      body: Align(
-        alignment: Alignment.topLeft,
+      // appBar: AppBar(
+			// 	title: Text("Service"),
+      //   automaticallyImplyLeading: false,
+			// ),
+      body: Center(
+        // alignment: Alignment.topLeft,
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text("Rate"),
-            TextField(
-              controller: txtController,
-              keyboardType: TextInputType.number,
-              inputFormatters: [FilteringTextInputFormatter.digitsOnly]
-              // ],
+            Text("Terimakasih sudah memesan!", style: TextStyle(fontWeight: FontWeight.bold)),
+            Text("Rating (dalam skala 1 hingga 5)"),
+            Container(
+              width: 200,
+              padding: EdgeInsets.fromLTRB(0, 16, 0, 16),
+              child: TextField(
+                controller: txtController,
+                keyboardType: TextInputType.number,
+                inputFormatters: [FilteringTextInputFormatter.digitsOnly]
+              ),
             ),
             ElevatedButton(
               onPressed: ((){
