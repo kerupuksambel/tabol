@@ -8,7 +8,7 @@ import 'package:latlong2/latlong.dart';
 import 'package:http/http.dart' as http;
 
  Future<Order> fetchOrder(int id) async{
-    final response = await http.get(Uri.parse('http://localhost:8000/api/order/' + id.toString()));
+    final response = await http.get(Uri.parse('http://localhost:8000/api/order/' + id.toString() + '/detail'));
     Order result;
     print(response.body);
     if (response.statusCode == 200) {
@@ -85,6 +85,8 @@ class OrderDetailState extends State<OrderDetail>{
                   ],
                 )
               );
+            }else{
+              print(snapshot.error);
             }
 
             return const CircularProgressIndicator();

@@ -2,10 +2,13 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:tabol/model/order.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
 Future<List<Order>> fetchOrders() async{
-  final response = await http.get(Uri.parse('http://localhost:8000/api/order/'));
+  final SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+  int? id = sharedPreferences.getInt("id");
+  final response = await http.get(Uri.parse('http://localhost:8000/api/order/' + id.toString()));
   List<Order> result = [];
   print(response.body);
   if (response.statusCode == 200) {
@@ -78,6 +81,8 @@ class OrderListState extends State<OrderList>{
                       itemCount: snapshot.data!.length
                     )
                   );
+                }else{
+                  print(snapshot.error);
                 }
 
                 return const CircularProgressIndicator();
