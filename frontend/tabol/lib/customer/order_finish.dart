@@ -91,11 +91,11 @@ class OrderFinishState extends State<OrderFinish>{
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text("Terimakasih sudah memesan!", style: TextStyle(fontWeight: FontWeight.bold)),
+            Text((widget.order.rating == null) ? "Terimakasih sudah memesan!" : "Silakan ganti rating yang Anda inginkan", style: TextStyle(fontWeight: FontWeight.bold)),
             Container(
               padding: EdgeInsets.fromLTRB(0, 16, 0, 16),
               child: RatingBar.builder(
-                initialRating: 0,
+                initialRating: (widget.order.rating != null) ? widget.order.rating! + 0.0 : 0,
                 minRating: 1,
                 direction: Axis.horizontal,
                 allowHalfRating: false,
