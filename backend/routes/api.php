@@ -22,8 +22,8 @@ Route::get('/tenant', 'TenantController@index');
 Route::get('/tenant/detail/{id_tenant}', 'TenantController@detail');
 Route::get('/tenant/service/{id_tenant}', 'ServiceController@detail');
 Route::post('/tenant/submit/', 'OrderController@add');
-Route::get('/order', 'OrderController@index');
-Route::get('/order/{order_id}', 'OrderController@detail');
+Route::get('/order/{user_id}', 'OrderController@index');
+Route::get('/order/{order_id}/detail', 'OrderController@detail');
 Route::post('/order/{order_id}/finish', 'OrderController@finish');
 Route::post('/order/{order_id}/rate', 'OrderController@rate');
 

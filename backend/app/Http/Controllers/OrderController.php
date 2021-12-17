@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
-    public function index()
+    public function index($user_id)
     {
         $data = [
             [
@@ -24,7 +24,8 @@ class OrderController extends Controller
             ]
         ];
 
-        $data = Order::orderBy('created_at', 'DESC')->get()->toArray();
+        $data = Order::where('user_id', $user_id)
+        ->orderBy('created_at', 'DESC')->get()->toArray();
         foreach ($data as $idx => $d) {
             $data[$idx]['tenant_nama'] = Tenant::find($data[$idx]['tenant_id'])->nama;
             $data[$idx]['created_at'] = Carbon::parse($data[$idx]['created_at'])->format("Y-m-d H:i:s");
@@ -70,6 +71,7 @@ class OrderController extends Controller
             "status" => $data->status,
             "lat" => $data->lat,
             "long" => $data->long,
+            "user_id" => $data->user_id,
             "created_at" => Carbon::parse($data->created_at)->format("Y-m-d H:i:s"),
             "updated_at" => Carbon::parse($data->updated_at)->format("Y-m-d H:i:s"),
         ]);
