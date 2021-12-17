@@ -1,10 +1,9 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:tabol/model/order.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 Future<int> finishOrder(Order order) async{
   final response = await http.post(
@@ -24,16 +23,15 @@ Future<int> finishOrder(Order order) async{
   }
 }
 
-Future<int> rateOrder(Order order, String rate) async{
-  order.rating = int.parse(rate);
+Future<int> rateOrder(int id, double rating) async{
   final response = await http.post(
-    Uri.parse('http://localhost:8000/api/order/' + order.id.toString() +'/rate/'), 
+    Uri.parse('http://localhost:8000/api/order/' + id.toString() +'/rate/'), 
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },
     body: jsonEncode({
-      "id" : order.id,
-      "rating" : order.rating
+      "id" : id,
+      "rating" : rating
     })
   );
   print(response.statusCode);
@@ -60,6 +58,7 @@ class OrderFinish extends StatefulWidget {
 class OrderFinishState extends State<OrderFinish>{
 
   late Future<int> status;
+  late double _rating;
 
   void initState(){
     super.initState();
@@ -68,6 +67,7 @@ class OrderFinishState extends State<OrderFinish>{
         Navigator.pushReplacementNamed(context, "/order/list/");
       }
     });
+    _rating = 0.0;
   }
 
   final txtController = TextEditingController();
@@ -92,27 +92,49 @@ class OrderFinishState extends State<OrderFinish>{
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text("Terimakasih sudah memesan!", style: TextStyle(fontWeight: FontWeight.bold)),
-            Text("Rating (dalam skala 1 hingga 5)"),
             Container(
-              width: 200,
               padding: EdgeInsets.fromLTRB(0, 16, 0, 16),
-              child: TextField(
-                controller: txtController,
-                keyboardType: TextInputType.number,
-                inputFormatters: [FilteringTextInputFormatter.digitsOnly]
-              ),
+              child: RatingBar.builder(
+                initialRating: 0,
+                minRating: 1,
+                direction: Axis.horizontal,
+                allowHalfRating: false,
+                itemCount: 5,
+                itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+                itemBuilder: (context, _) => Icon(
+                  Icons.star,
+                  color: Colors.blue,
+                ),
+                onRatingUpdate: (rating) {
+                  setState(() {
+                    _rating = rating;
+                  });
+                },
+              )
             ),
-            ElevatedButton(
-              onPressed: ((){
-                rateOrder(widget.order, txtController.text).then((res){
-                  if(res == 1){
-                    Navigator.pushReplacementNamed(context, '/order/list/');
-                  }else{
-                    
-                  }
-                });
-              }), 
-              child: Text("Submit")
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  onPressed: (_rating == 0.0) ? null : ((){
+                    rateOrder(widget.order.id, _rating).then((res){
+                      if(res == 1){
+                        Navigator.pushReplacementNamed(context, '/order/list/');
+                      }
+                    });
+                  }), 
+                  child: Text("Submit"),
+                ),
+                Padding(padding: (widget.order.rating != null) ? EdgeInsets.fromLTRB(8, 0, 8, 0) : EdgeInsets.all(0)),
+                (widget.order.rating != null) ?
+                TextButton(
+                  onPressed: ((){
+                    Navigator.pop(context);
+                  }), 
+                  child: Text("Kembali"),
+                ) : Text("")
+              ],
             )
           ]
         )

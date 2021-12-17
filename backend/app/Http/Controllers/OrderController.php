@@ -72,6 +72,7 @@ class OrderController extends Controller
             "lat" => $data->lat,
             "long" => $data->long,
             "user_id" => $data->user_id,
+            "rating" => $data->rating,
             "created_at" => Carbon::parse($data->created_at)->format("Y-m-d H:i:s"),
             "updated_at" => Carbon::parse($data->updated_at)->format("Y-m-d H:i:s"),
         ]);

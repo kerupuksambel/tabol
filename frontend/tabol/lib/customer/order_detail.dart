@@ -49,6 +49,7 @@ class OrderDetailState extends State<OrderDetail>{
           future: futureOrder,
           builder: (context, snapshot){
             if(snapshot.hasData){
+              print(snapshot.data!.rating);
               return Container(
                 child: Column(
                   children: [
@@ -71,7 +72,7 @@ class OrderDetailState extends State<OrderDetail>{
                                 point: new LatLng(snapshot.data!.lat, snapshot.data!.long),
                                 builder: (ctx) =>
                                 new Container(
-                                  child: Icon(Icons.circle, color: Colors.red,)
+                                  child: Icon(Icons.circle, color: Colors.blue,)
                                 ),
                               )
                             ]
@@ -79,9 +80,22 @@ class OrderDetailState extends State<OrderDetail>{
                         ],
                       )
                     ),
-                    Text('${snapshot.data!.tenantName}', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24)),
-                    Text('${snapshot.data!.serviceName}'),
-                    Text('${snapshot.data!.hargaFormat}', style: TextStyle(fontWeight: FontWeight.bold),),
+                    Container(
+                      padding: EdgeInsets.fromLTRB(0, 32, 0, 0),
+                      child: Column(
+                        children: [
+                          Text('${snapshot.data!.tenantName}', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24)),
+                          Text('${snapshot.data!.serviceName}'),
+                          Text('${snapshot.data!.hargaFormat}', style: TextStyle(fontWeight: FontWeight.bold),),
+                          // ((){
+                          //   if(snapshot.data!.status == "selesai"){
+                          //     return Text("Rating : ${snapshot.data!.rating}");
+                          //   }
+                          // })()
+                          (snapshot.data!.status == "selesai") ? Text("Rating : ${snapshot.data!.rating} / 5") : Text("")
+                        ],
+                      )
+                    )
                   ],
                 )
               );
@@ -93,13 +107,21 @@ class OrderDetailState extends State<OrderDetail>{
           }, 
         )
       ),
-      floatingActionButton: FloatingActionButton(
-				onPressed: (){
-          Navigator.pushNamed(context, '/order/finish/', arguments: widget.order);
-        },
-				tooltip: 'Selesaikan',
-				child: Icon(Icons.check),
-			), // This trailing comma makes auto-formatting nicer for build methods.
+      floatingActionButton: (widget.order.status != "selesai") ? 
+        FloatingActionButton(
+          onPressed: (){
+            Navigator.pushNamed(context, '/order/finish/', arguments: widget.order);
+          },
+          tooltip: 'Selesaikan',
+          child: Icon(Icons.check),
+        ) :
+        FloatingActionButton(
+          onPressed: (){
+            Navigator.pushNamed(context, '/order/finish/', arguments: widget.order);
+          },
+          tooltip: 'Ubah Rating',
+          child: Icon(Icons.edit),
+        )  // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
